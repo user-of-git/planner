@@ -372,7 +372,7 @@ def add_answer(request, question_id):
 @permission_required('dayplanner.add_motto')
 def add_motto(request):
     if request.method == 'POST':
-        if request.POST['user'] == request.user:
+        if int(request.POST['user']) == request.user:
             form = MottoForm(request.POST or None)
             if form.is_valid():
                 form.save()
