@@ -1,0 +1,40 @@
+<!-- introduction -->
+{% extends 'base.html' %}
+{% block title %}INTRODUCTION{% endblock %}
+{% block content %}
+<div class="center">
+<h1 class="underline">Introduction</h1>
+<p>Welcome to Matt's Task Planner! This is a django powered website created by Matt Skovranek.</p>
+<h2 class="underline">About Task Planner</h2>
+</div>
+<p>I created this website to provide myself with a custom planner.
+  It is created for my own requirements, ie: the black and green 'AS400' aesthetic.
+  This is a straight forward application whose purpose is to organize my daily tasks and projects' tasks.
+  There are seven objects, some of which are linked, ie: Category-Task-SubTask-Counter, Question-Answer.
+  The website acts upon these objects to simulate how one would actually organize their activity.
+  The objects are as follows:
+</p>
+<br>
+<ul>
+  <li><h3 class="underline">Category/Project</h3>
+    For grouping tasks into either general categories such as Health or Writing, or into projects such as preparing for a Vacation.</li>
+  <br>
+  <li><h3 class="underline">Task</h3>
+    Each Task has a start date and time, due date and time, priority number, and status as finished or unfinished. Set priority to '0' to omit it in the display. Due date and time cannot be before start chronologically. The user can track tasks by start day, deadline or category/project. </li>
+  <br>
+  <li><h3 class="underline">SubTask</h3>
+    Each Task can have unlimited subtasks added to it, for dividing a large task into smaller tasks. Also has priority number and finished status.</li>
+  <br>
+  <li><h3 class="underline">Counter</h3>
+    Each Subtask can have a tally added to it, for things such as keeping track of how many reps of forty pushups you've done today.</li>
+  <br>
+  <li><h3 class="underline">Question</h3>
+    Benjamin Franklin would start the day by answering a daily question, always, "What good shall I do today?". Likewise, I strive to ascertain a daily resolution by answering some equally appealling question. Perhaps, what is a positive habit to start today?</li>
+  <br>
+  <li><h3 class="underline">Answer</h3>
+    Each question for resolution needs to be answered. What good shall I do today? Call an old friend I haven't heard from in a while.</li>
+  <br>
+  <li><h3 class="underline">Motto</h3>
+    Timon and Pumbaa said "hakuna matata". Bob McFerrin said, "Don't worry, be happy." Or for complicated situations, "Keep It Simple, Stupid."</li>
+</ul>
+{% endblock %}

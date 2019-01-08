@@ -1,0 +1,26 @@
+<!-- add category -->
+{% extends 'base.html' %}
+{% block title %}ADD CATEGORY OR PROJECT{% endblock %}
+{% block content %}
+<h1 class="underline">Add Category or Project</h1>
+<nav>
+	<a href="{% url 'edit_category' %}">edit category or project</a> |
+	<a href="{% url 'delete_category' %}">delete category or project</a> |
+	<a href="{% url 'add_task' %}">add task</a>
+</nav>
+<br>
+	<form method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="user" value="{{ user.pk }}">
+		<table>
+			<tr>
+				<td class="form">Project</td>
+				<td class="form"><input type="checkbox" name="project" aria-label="Project"></td>
+		  </tr>
+		  <tr>
+				<td class="form"><input type="text" placeholder="Name" aria-label="Category" name="name"></td>
+		    <td class="form"><button class="button" type="submit" aria-label="Submit">Add</button></td>
+		  </tr>
+		</table>
+	</form>
+{% endblock %}

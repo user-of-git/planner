@@ -1,0 +1,29 @@
+<!-- add question -->
+{% extends 'base.html' %}
+{% block title %}ADD QUESTION{% endblock %}
+{% block content %}
+<h1 class="underline">Add Question</h1>
+<nav>
+  <a href="{% url 'add_motto' %}">add motto</a>
+</nav>
+<br>
+<form method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="user" value="{{ user.pk }}">
+  <table >
+    <tr>
+	  <td class="form">Question</td>
+      <td class="form"><input type="text" placeholder="Question" aria-label="Question" name="question"></td>
+    </tr>
+    <tr>
+	  <td class="form">Priority</td>
+      <td class="form"><input type="number" name="priority" min="0" max="20" value="1" aria-label="Priority"></td>
+	</tr>
+    <tr>
+      <td class="form" colspan="2">
+		<button class="button" type="submit" aria-label="Submit">Add Question</button>
+	  </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

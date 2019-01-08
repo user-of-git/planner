@@ -1,0 +1,122 @@
+<!--PROJECTS-->
+{% extends 'base.html' %}
+{% block title %}PROJECTS{% endblock %}
+{% block content %}
+<h1 class="underline">Projects</h1>
+<nav>
+    <a href="{% url 'add_category' %}">add project</a> |
+    <a href="{% url 'delete_category' %}">delete project</a> |
+    <a href="{% url 'add_task' %}">add task</a>
+</nav>
+<br>
+	<form method="POST" action="{% url 'projects' %}">
+		{% csrf_token %}
+		<table>
+		    <tr>
+		        <td><select name="category_id" required>
+                    {% if project %}
+                        <option value="{{ project.id }}" selected>{{ project }}</option>
+                    {% else %}
+                        <option value="no_choice" selected hidden>Select Project</option>
+                    {% endif %}
+					{% if categories %}
+						{% for category in categories %}
+                            {% if category != project %}
+						        <option value="{{ category.id }}">{{ category }}</option>
+					        {% endif %}
+						{% endfor %}
+				    {% endif %}
+				</select></td>
+		    <td><button class="button" type="submit">Select Project</button></td>
+		</tr>
+		</table>
+    </form>
+{% if project %}
+<table>
+<h1 class="center">{{ project }}</h1>
+    <tr>
+        <th>Task</th>
+        <th>Due/Done</th>
+        <th>Edit Delete Add</th>
+    </tr>
+{% for task in project.task_due %}
+    <tr>
+        <td>{% if task.finished %}
+                <input type="checkbox" class="finished" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">
+                    {% if task.priority > 0 %}{{ task.priority }}) {% endif %}{{ task }}
+                </a>
+            {% else %}
+                <input type="checkbox" class="finished" disabled>     
+                <a href="{% url 'task_finished' task.id %}">
+                    {% if task.priority > 0 %}{{ task.priority }}) {% endif %}{{ task }}
+                </a>
+            {% endif %}
+        </td>
+        <td>{% if task.finished %}
+                Done:{{ task.finished_when|date:"m-d-y"  }}
+            {% else %}
+                Due: {{ task.due|date:"m-d-y"}}
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'add_subtask' task.id %}"> #</a>
+        </td>
+    </tr>
+        {% if task.subtask_set.all %}
+            {% for subtask in task.subtask_priority %}
+            <tr>
+                <td class="subtask">{% if subtask.finished == True %}
+                        <input type="checkbox" class="finished" checked disabled>
+                        <a href="{% url 'subtask_not_finished' subtask.id %}">
+                            <div class="black">___</div>{% if subtask.priority > 0 %}{{ subtask.priority }}) {% endif %}{{ subtask }}
+                        </a>
+                    {% else %}
+                        <input type="checkbox" class="finished" disabled>
+                        <a href="{% url 'subtask_finished' subtask.id %}">
+                            <div class="black">___</div>{% if subtask.priority > 0 %}{{ subtask.priority }}) {% endif %}{{ subtask }}
+                        </a>
+                    {% endif %}
+                </td>
+                <td class="subtask">
+                    {% if subtask.counter_set.all %}
+                        {% for counter in subtask.counter_set.all %}
+                            {{ counter }}
+                            <a href="{% url 'increment_counter' counter.id %}">+</a>
+                            <a href="{% url 'decrement_counter' counter.id %}"> -</a>
+                            <form class="inline" method="POST" action="{% url 'delete' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ counter.id }}">
+                                <input type="hidden" name="object_type" value="counter">
+                                <button class="delete" type="submit" aria-label="Submit">X</button>
+                            </form>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td class="subtask">
+                    <a href="{% url 'edit_subtask' subtask.id %}"> +</a>
+                    <form class="inline" method="POST" action="{% url 'delete' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ subtask.id }}">
+                        <input type="hidden" name="object_type" value="subtask">
+                        <button class="delete" type="submit" aria-label="Submit">X</button>
+                    </form>
+                    {% if not subtask.counter_set.all %}
+                        <a href="{% url 'add_counter' subtask.id %}"> #</a>
+                    {% endif %}
+                </td>
+            </tr>        
+            {% endfor %}
+        {% endif %}
+    </tr>
+{% endfor %}
+{% endif %}
+</table>
+{% endblock %}

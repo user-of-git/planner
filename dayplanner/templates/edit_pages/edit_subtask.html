@@ -1,0 +1,49 @@
+<!-- edit subtask -->
+{% extends 'base.html' %}
+{% block title %}EDIT SUBTASK{% endblock %}
+{% block content %}
+<h1 class="underline">Edit Subtask</h1>
+<nav>
+	<a href="{% url 'add_task' %}">add task</a> |
+	<a href="{% url 'add_category' %}">add category or project</a>
+</nav>
+<br>
+  <form method="POST">
+	  {% csrf_token %}
+		<table>
+		<tr>
+			<td class="form">Task</td>
+			<td class="form">
+				<input type="hidden" name="task" value="{{ subtask.task.id }}">
+				{{ subtask.task }}
+			</td>
+		</tr>
+		<tr>
+			<td class="form">SubTask</td>
+			<td class="form"><input type="text" value="{{ subtask.name }}" aria-label="Subtask" name="name"></td>
+		</tr>
+		<tr>
+			<td class="form">Priority</td>
+			<td class="form">
+				<input type="number" min="0" max="20" value="{{ subtask.priority }}" name="priority" aria-label="Priority">
+				<a href="{% url 'subtask_priority_increment' subtask.id %}">+</a>
+				<a href="{% url 'subtask_priority_decrement' subtask.id %}">-</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">Complete</td>
+			<td class="form">
+			{% if subtask.finished == True %}
+			  <input type="checkbox" name="finished" checked aria-label="Finished">
+			{% else %}
+			  <input type="checkbox" name="finished" aria-label="Finished">
+			{% endif %}
+			</td>
+		<tr>
+			<td class="form" colspan="2">
+				  <button class="button" type="submit" aria-label="Submit">Edit Subtask</button>
+			</td>
+    </tr>
+    </table>
+	</form>
+{% endblock %}

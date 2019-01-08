@@ -1,0 +1,32 @@
+<!-- add answer -->
+{% extends 'base.html' %}
+{% block title %}ADD ANSWER{% endblock %}
+{% block content %}
+<h1 class="underline">Add Answer</h1>
+<nav>
+	<a href="{% url 'add_question' %}">add question</a> |
+	<a href="{% url 'add_motto' %}">add motto</a>
+</nav>
+<br>
+<form method="POST">
+	{% csrf_token %}
+	<table>
+	  <tr>
+      <td class="form">
+			  {% if question %}
+			    <input type="hidden" name="question" value="{{ question.id }}" aria-label="Question" >
+					{{ question }}
+				{% else %}
+				  <a href="{% url 'add_question' %}">ADD QUESTION</a>
+			  {% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td class="form"><input type="text" placeholder="Answer" aria-label="Answer" name="answer"></td>
+		</tr>
+	  <tr>
+		  <td class="form"><button class="button" type="submit" aria-label="Submit">Add Answer</button></td>
+		</tr>
+  </table>
+</form>
+{% endblock %}

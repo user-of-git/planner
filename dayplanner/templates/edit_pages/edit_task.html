@@ -1,0 +1,61 @@
+<!-- edit task -->
+{% extends 'base.html' %}
+{% block title %}EDIT TASK{% endblock %}
+{% block content %}
+<h1 class="underline">Edit Task</h1>
+<nav>
+<a href="{% url 'add_task' %}">add task</a> |
+<a href="{% url 'add_category' %}">add category or project</a>
+</nav>
+<br>
+{% if task %}
+<form method="POST">
+	  {% csrf_token %}
+		<input type="hidden" name="user" value="{{ user.pk }}">
+		<table>
+		<tr>
+			<td class="form">Category or Project</td>
+			<td class="form"><select class="category" name="category" aria-label="Category">
+					{% if categories %}
+						{% for category in categories %}
+						<option value="{{ category.id }}">{{ category.name }}</option>
+						{% endfor %}
+				{% endif %}
+				</select></td>
+		</tr>
+		<tr>
+			<td class="form">Task</td>
+			<td class="form"><input type="text" placeholder="{{ task.name }}" value="{{ task.name }}" aria-label="Task" name="name"></td>
+		</tr>
+		<tr>
+			<td class="form">Priority</td>
+			<td class="form">
+				<input type="number" name="priority" value="{{ task.priority }}" min="0" max="20" aria-label="Priority">
+				<a href="{% url 'task_priority_increment' task.id %}">+</a>
+				<a href="{% url 'task_priority_decrement' task.id %}">-</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="form">Start {{ task.start|date:'m-d-y' }} {{ task.start|time:'g:iA' }}</td>
+			<td class="form"><input type="datetime-local" placeholder="{{ task.start|date:'m/d/Y' }}" name="start" aria-label="Start"></td>
+		</tr>
+		<tr>
+		  <td class="form">Due {{ task.due|date:'m-d-y' }} {{ task.due|time:'g:iA' }}</td>
+			<td class="form"><input type="datetime-local" placeholder="{{ task.due|date:'m/d/Y' }}" name="due" aria-label="Due"></td>
+		</tr>
+		<tr>
+			<td class="form">Completed</td>
+		  {% if task.finished == True %}
+			  <td class="form"><input type="checkbox" name="finished"  aria-label="Finished" checked></td>
+			{% else %}
+			  <td class="form"><input type="checkbox" name="finished" aria-label="Finished"></td>
+			{% endif %}
+		</tr>
+		<tr>
+		  <td class="form" colspan="2"><button class="button" type="submit" aria-label="Submit">Edit Task</button></td>
+		</tr>
+		</table>
+	</form>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,219 @@
+<!-- deadlines -->
+{% extends 'base.html' %}
+{% block title %}DEADLINES{% endblock %}
+{% block content %}
+<h1 class="underline">Deadlines</h1>
+<nav>
+    <a href="{% url 'add_task' %}">add task</a>
+</nav>
+<br>
+<ul class="no_padding">
+<li class="underline">Due Today: {{ today|date:"l, M. j, Y"  }}</li>
+    <ul>
+    {% if today_tasks %}
+    {% for task in today_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">{{ task.priority }}) [Due: {{ task.due|time:"P" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">{{ task.priority }}) [Due: {{ task.due|time:"P" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due Tomorrow: {{ tomorrow|date:"l, M. j, Y"  }}</li>
+    <ul>
+    {% if tomorrow_tasks %}
+    {% for task in tomorrow_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">{{ task.priority }}) [Due: {{ task.due|time:"P" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">{{ task.priority }}) [Due: {{ task.due|time:"P" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due This Week: #{{ today|date:"W" }}</li>
+    <ul>
+    {% if week_tasks %}
+    {% for task in week_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due Next Week: #{{ next_week|date:"W" }}</li>
+    <ul>
+    {% if next_week_tasks %}
+    {% for task in next_week_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due This Month: {{ today|date:"F"}}</li>
+    <ul>
+    {% if month_tasks %}
+    {% for task in month_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+        <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due Next Thirty Days:</li>
+    <ul>
+    {% if thirty_days_tasks %}
+    {% for task in thirty_days_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due This Year: {{ today|date:"Y"}}</li>
+    <ul>
+    {% if year_tasks %}
+    {% for task in year_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+<br>
+<li class="underline">Due After This Year:</li>
+    <ul>
+    {% if future_tasks %}
+    {% for task in future_tasks %}
+        <li>{% if task.finished == True %}
+                <input type="checkbox" checked disabled>
+                <a href="{% url 'task_not_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% else %}
+                <input type="checkbox" disabled>
+                <a href="{% url 'task_finished' task.id %}">[Due: {{ task.due|date:"n-j-y" }}] {{ task }} ({{ task.category}})</a>
+            {% endif %}
+            <a href="{% url 'edit_task' task.id %}"> +</a>
+            <form class="inline" method="POST" action="{% url 'delete' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="object_type" value="task">
+                <button class="delete" type="submit" aria-label="Submit">X</button>
+            </form>
+            <a href="{% url 'archive_get' task.start.year task.start.month task.start.day %}">#</a>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>None</li>
+    {% endif %}
+    </ul>
+</ul>
+{% endblock %}

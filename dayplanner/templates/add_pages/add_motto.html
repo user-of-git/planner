@@ -1,0 +1,24 @@
+<!-- add motto -->
+{% extends 'base.html' %}
+{% block title %}ADD MOTTO{% endblock %}
+{% block content %}
+<h1 class="underline">Add Motto</h1>
+<nav>
+	<a href="{% url 'edit_motto' %}">edit motto</a> |
+	<a href="{% url 'add_question' %}">add question</a>
+</nav>
+<br>
+<form method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="user" value="{{ user.pk }}">
+	<table>
+		<tr>
+		  <td class="form">Motto</td>
+			<td class="form"><input type="text" placeholder="Motto" aria-label="Motto" name="motto"></td>
+		</tr>
+		<tr>
+		  <td class="form" colspan="2"><button class="button" type="submit" aria-label="Submit">Add Motto</button></td>
+		</tr>
+	</table>
+</form>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!--delete category -->
+{% extends 'base.html' %}
+{% block title %}DELETE CATEGORY/PROJECT{% endblock %}
+{% block content %}
+<h1 class="underline">Delete Category or Project</h1>
+<nav>
+	<a href="{% url 'add_category' %}">add category or project</a> |
+	<a href="{% url 'edit_category' %}">edit category or project</a> |
+	<a href="{% url 'add_task' %}">add task</a>
+</nav>
+<br>
+	<form method="POST" action="{% url 'delete' %}">
+
+        {% csrf_token %}
+        <input type="hidden" name="object_type" value="category">
+        <table>
+		  <tr>
+		    <td><select class="id" name="id" aria-label="Category">
+					{% if categories %}
+						{% for category in categories %}
+						<option value="{{ category.id }}">{{ category }}</option>
+						{% endfor %}
+				{% endif %}
+				</select></td>
+		    <td><button class="button" type="submit" aria-label="Submit">Delete Category/Project</button></td>
+		</tr>
+		</table>
+		
+	</form>
+
+{% endblock %}

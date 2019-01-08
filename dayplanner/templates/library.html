@@ -1,0 +1,92 @@
+<!-- library -->
+{% extends 'base.html' %}
+{% block title %}LIBRARY{% endblock %}
+{% block content %}
+<h1 class="underline">Library</h1>
+<nav>
+    <p class="inline">
+    <a href="{% url 'add_task' %}">add task</a> |
+    <a href="{% url 'add_category' %}">add category or project</a> |
+    <a href="{% url 'add_question' %}">add question</a> |
+    <a href="{% url 'add_motto' %}">add motto</a>
+</nav>
+<br>
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>
+                <select name="object_type" class="object_type">
+                    {% if object_type %}
+                        <option value="{{ object_type }}" selected>{{ object_type }}</option>
+                    {% else %}
+                        <option value="no_choice" selected hidden>Select</option>
+                    {% endif %}
+                    {% if object_type != "Categories & Projects" %}
+                    <option value="Categories & Projects">Categories & Projects</option>
+                    {% endif %}
+                    {% if object_type != "Tasks" %}
+                    <option value="Tasks">Tasks</option>
+                    {% endif %}
+                    {% if object_type != "Questions" %}
+                    <option value="Questions">Questions</option>
+                    {% endif %}
+                    {% if object_type != "Mottos" %}
+                    <option value="Mottos">Mottos</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td>
+                <button type="submit" class="button">Select</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<br>
+{% if object_list %}
+    <ul class="no_padding">
+    {% for object in object_list %}
+        <li>
+            {% if object_type == 'Categories & Projects' %}
+                {{ object }}
+                <a href="{% url 'edit_category' %}"> +</a>
+                <form class="inline" method="POST" action="{% url 'delete' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ object.id }}">
+                    <input type="hidden" name="object_type" value="category">
+                    <button class="delete" type="submit" aria-label="Submit">X</button>
+                </form>
+            {% elif object_type == 'Tasks' %}
+                {{ object }}
+                [<a href="{% url 'edit_task' object.id %}">+</a>
+                <form class="inline" method="POST" action="{% url 'delete' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ object.id }}">
+                    <input type="hidden" name="object_type" value="task">
+                    <button class="delete" type="submit" aria-label="Submit">X</button>
+                </form>
+                <a href="{% url 'archive_get' object.start.year object.start.month object.start.day %}">#</a>]
+            {% elif object_type == 'Questions' %}
+                {{ object }}
+                <a href="{% url 'edit_question' object.id %}"> +</a>
+                <form class="inline" method="POST" action="{% url 'delete' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ object.id }}">
+                    <input type="hidden" name="object_type" value="category">
+                    <button class="delete" type="submit" aria-label="Submit">X</button>
+                </form>
+            {% elif object_type == 'Mottos' %}
+                {{ object }}
+                <a href="{% url 'edit_motto' %}"> +</a>
+                <form class="inline" method="POST" action="{% url 'delete' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ object.id }}">
+                    <input type="hidden" name="object_type" value="motto">
+                    <button class="delete" type="submit" aria-label="Submit">X</button>
+                </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

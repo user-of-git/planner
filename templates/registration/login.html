@@ -1,0 +1,45 @@
+<!-- login -->
+{% extends 'base.html' %}
+{% block title %}LOGIN{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+  <p>Username and password don't match. Try again.</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>You are already logged in.</p>
+  {% else %}
+    <p>Please login.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<input type="hidden" name="next" value="{{ next }}">
+<table>
+  <tr>
+    <td class="form">{{ form.username.label_tag }}</td>
+    <td class="form">{{ form.username }}</td>
+  </tr>
+  <tr>
+    <td class="form">{{ form.password.label_tag }}</td>
+    <td class="form">{{ form.password }}</td>
+  </tr>
+  <tr>
+    <td class="form" colspan="2"><button class="button" type="submit" aria-label="Submit">Log In</button></td>
+  </tr>
+  <tr>
+    <td class="form">
+      <a href="{% url 'password_reset' %}">Reset password?</a>
+    </td>
+    <td class="form">
+      <a href="{% url 'django_registration_register' %}">Register</a>
+    </td>
+  </tr>
+  <input type="hidden" name="next" value="{{ next }}">
+</table>
+</form>
+{% endblock %}

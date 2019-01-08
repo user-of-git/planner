@@ -1,0 +1,42 @@
+<!-- edit category -->
+{% extends 'base.html' %}
+{% block title %}EDIT CATEGORY OR PROJECT{% endblock %}
+{% block content %}
+<h1 class="underline">Edit Category or Project</h1>
+<nav>
+	<a href="{% url 'add_category' %}">add category or project</a> |
+	<a href="{% url 'delete_category' %}">delete category or project</a> |
+	<a href="{% url 'add_task' %}">add task</a>
+</nav>
+<br>
+	<form method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="user" value="{{ user.pk }}" aria-label="User">
+		<table>
+		  <tr>
+		    <td class="form">
+					<label>Select</label>
+					<select name="id" aria-label="Category">
+					{% if categories %}
+						{% for category in categories %}
+						<option value="{{ category.id }}">{{ category }}</option>
+						{% endfor %}
+				{% endif %}
+				</select></td>
+			</tr>
+			<tr>
+			  <td class="form">Project</td>
+		    {% if category.project == True %}
+			    <td class="form"><input type="checkbox" name="project"  aria-label="Project" checked></td>
+			  {% else %}
+			    <td class="form"><input type="checkbox" name="project" aria-label="Project"></td>
+			  {% endif %}
+		  <tr>
+				<td class="form"><input type="text" placeholder="Edit Name" aria-label="Category" name="name"></td>
+			</tr>
+			<tr>
+		    <td class="form"><button class="button" type="submit" aria-label="Submit">Edit Category/Project</button></td>
+		  </tr>
+		</table>
+	</form>
+{% endblock %}

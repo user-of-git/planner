@@ -1,0 +1,14 @@
+Dear {{ user }},
+
+Thank you for registering on Matt's Task Planner.
+Go to the following link to activate your account.
+
+Activation Link
+{{ scheme }}://{{ domain }}accounts/activate/{{ activation_key }}
+
+This link will expire in {{ expiration_days }} day(s).
+
+If you did not register for this site, don't click the link.
+
+Thank you,
+Matt Skovranek

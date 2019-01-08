@@ -1,0 +1,29 @@
+<!-- previous days -->
+{% extends 'base.html' %}
+{% block title %}PREVIOUS {{ days }} DAYS{% endblock %}
+{% block content %}
+<h1 class="underline">Previous {{ days }} Days</h1>
+<nav>
+  select days: 
+  <a href="{% url 'previous_days' 7 %}">[seven]</a>
+  <a href="{% url 'previous_days' 14 %}">[fourteen]</a>
+  <a href="{% url 'previous_days' 30 %}">[thirty]</a>
+  <a href="{% url 'previous_days' 100 %}">[one-hundred]</a>
+  <a href="{% url 'previous_days' 365 %}">[365]</a>
+</nav>
+<br>
+<table width="40%">
+  <tr>
+      <th>Day</th>
+      <th>Archive</th>
+  </tr>
+  {% if data %}
+  {% for day, date in data.items %}
+  <tr>
+    <td>{{ date|date:"l" }}</td>
+    <td><a href="{% url 'archive_get' date.year date.month date.day %}">{{ date|date:"F jS" }}</a></td>
+  </tr>
+  {% endfor %}
+  {% endif %}
+</table>
+{% endblock %}

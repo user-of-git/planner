@@ -1,0 +1,12 @@
+<!-- activation failed -->
+{% extends 'base.html' %}
+{% block title %}ACTIVATION FAILED{% endblock %}
+
+{% block content %}
+<h1 class="underline">Activation Failed</h1>
+{% if activation_error %}
+  {% for key, value in activation_error %}
+    <h3>{{ key }}: {{ value }}</h3>
+  {% endfor %}
+{% endif %}
+{% endblock %}
