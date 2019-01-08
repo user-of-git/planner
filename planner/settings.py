@@ -133,10 +133,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_ACTIVATION_DAYS = 1
 
 # emails
-DEFAULT_FROM_EMAIL = 'x'
-SERVER_EMAIL = 'x'
+# DEFAULT_FROM_EMAIL = ''
+# SERVER_EMAIL = ''
 # EMAIL_FILE_PATH = '/'
-ADMINS = [('name', 'name@example.com')]
+ADMINS = [('matt', 'mattskov1@gmail.com')]
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
