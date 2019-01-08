@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dayplanner.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('django_registration.backends.onestep.urls')),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
 ]
