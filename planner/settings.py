@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'm&xdy0ni7g@llj1wd%e3wz3q&ulsry
 # dict value set as '' to evaluate as False by bool()
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 
-ALLOWED_HOSTS = [matts-task-planner.herokuapp.com]
+ALLOWED_HOSTS = ['matts-task-planner.herokuapp.com']
 
 # Application definition
 
