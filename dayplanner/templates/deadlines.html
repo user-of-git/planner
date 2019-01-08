@@ -60,7 +60,7 @@
     {% endif %}
     </ul>
 <br>
-<li class="underline">Due This Week: #{{ today|date:"W" }}</li>
+<li class="underline">Due This Week: #{{ today|date:"W" }} of {{ today|date:"Y" }}</li>
     <ul>
     {% if week_tasks %}
     {% for task in week_tasks %}
@@ -86,7 +86,7 @@
     {% endif %}
     </ul>
 <br>
-<li class="underline">Due Next Week: #{{ next_week|date:"W" }}</li>
+<li class="underline">Due Next Week: #{{ next_week|date:"W" }} of {{ next_week|date:"Y" }}</li>
     <ul>
     {% if next_week_tasks %}
     {% for task in next_week_tasks %}

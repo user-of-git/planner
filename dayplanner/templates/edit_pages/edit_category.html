@@ -14,7 +14,7 @@
 		<input type="hidden" name="user" value="{{ user.pk }}" aria-label="User">
 		<table>
 		  <tr>
-		    <td class="form">
+		    <td class="form" colspan="2">
 					<label>Select</label>
 					<select name="id" aria-label="Category">
 					{% if categories %}
@@ -32,10 +32,10 @@
 			    <td class="form"><input type="checkbox" name="project" aria-label="Project"></td>
 			  {% endif %}
 		  <tr>
-				<td class="form"><input type="text" placeholder="Edit Name" aria-label="Category" name="name"></td>
+				<td class="form" colspan="2"><input type="text" placeholder="Edit Name" aria-label="Category" name="name"></td>
 			</tr>
 			<tr>
-		    <td class="form"><button class="button" type="submit" aria-label="Submit">Edit Category/Project</button></td>
+		    <td class="form" colspan="2"><button class="button" type="submit" aria-label="Submit">Edit Category/Project</button></td>
 		  </tr>
 		</table>
 	</form>

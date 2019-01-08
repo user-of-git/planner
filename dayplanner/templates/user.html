@@ -7,6 +7,7 @@
 <ul class="no_padding">
   {% if user.email %}
     <li>email: {{ user.email }}</li>
+    <br>
   {% endif %}
   <li>Joined:</li>
   <li>{{ user.date_joined }}</li>
@@ -14,6 +15,6 @@
   <li>Most Recent Login:</li>
   <li>{{ user.last_login }}</li>
 </ul>
-<p>(Note: Only you can see your user profile. To change your email, username, or password, email 'admin@notsiteyet.com'.)</p>
+<p>(Note: Only you can see your user profile. To change your email, username, or password, email 'mattskov1@gmail.com'.)</p>
 {% endif %}
 {% endblock %}
