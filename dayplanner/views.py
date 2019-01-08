@@ -630,7 +630,7 @@ def task_not_finished(request, task_id):
     if task.user == request.user:
         task.finished = False
         task.save()
-        messages.success(request, '%s finished.' % task)
+        messages.success(request, '%s not finished.' % task)
     else:
         messages.error(request, 'You may not edit the Tasks of other Users.')
     return redirect(request.META.get('HTTP_REFERER'))
@@ -656,7 +656,7 @@ def subtask_not_finished(request, subtask_id):
     if subtask.task.user == request.user:
         subtask.finished = False
         subtask.save()
-        messages.success(request, '%s finished.' % subtask)
+        messages.success(request, '%s not finished.' % subtask)
     else:
         messages.error(request, 'You may not edit the SubTasks of other Users.')
     return redirect(request.META.get('HTTP_REFERER'))
