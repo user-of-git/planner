@@ -24,7 +24,8 @@
         <a href="{% url 'user' %}">user: {{ user }}</a>
         <a href="{% url 'logout' %}?next={{request.path}}">[log out]</a>
       {% else %}
-        <a href="{% url 'login' %}?next={{request.path}}">[login]</a>
+        <a href="{% url 'login' %}?next={{request.path}}">[login]</a> |
+        <a href="{% url 'django_registration_register' %}">[register]</a>
       {% endif %}
     </nav>
     <br>

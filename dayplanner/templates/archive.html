@@ -13,6 +13,7 @@
 <nav>
     <a href="{% url 'add_task' %}">add task</a>
 </nav>
+<br>
 <div>
 <form action="{% url 'archive' %}" method="POST">
   {% csrf_token %}
