@@ -15,6 +15,7 @@
     <p>Please login.</p>
   {% endif %}
 {% endif %}
+<h1><a href="{% url 'django_registration_register' %}">Dad click here to register</a></h1>
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
