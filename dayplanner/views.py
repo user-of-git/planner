@@ -179,7 +179,7 @@ def library(request):
 @permission_required(['dayplanner.view_task', 'dayplanner.view_category'])
 def projects(request):
     categories = Category.objects.filter(user=request.user).exclude(project=False)
-    if request.method == 'POST':
+    if 'user' in request.GET:
         project = Category.objects.get(pk=request.POST['category_id'])
         if request.user == project.user:
             if request.POST['category_id'] == 'no_choice':
