@@ -19,6 +19,7 @@ urlpatterns = [
     path('previous_<int:days>_days', views.previous_days, name='previous_days'),
     path('library', views.library, name='library'),
     path('projects', views.projects, name='projects'),
+    path('projects/<int:category_id>', views.projects_get, name='projects_get'),
     path('deadlines', views.deadlines, name='deadlines'),
     # add
     path('add_category', views.add_category, name='add_category'),

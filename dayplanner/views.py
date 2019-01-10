@@ -174,18 +174,31 @@ def library(request):
         return render(request, 'library.html')
 
 
+@login_required
+@permission_required(['dayplanner.view_task', 'dayplanner.view_category'])
+def projects_get(request, category_id):
+    categories = Category.objects.filter(user=request.user).exclude(project=False)
+    project = Category.objects.get(pk=category_id)
+    if request.user == project.user:
+        return render(request, 'projects.html', {'categories': categories, 'project': project})
+    else:
+        messages.error(request, 'You may only view your own Projects.')
+        return render(request, 'projects.html', {'categories': categories})
+
+
 @csrf_protect
 @login_required
 @permission_required(['dayplanner.view_task', 'dayplanner.view_category'])
 def projects(request):
     categories = Category.objects.filter(user=request.user).exclude(project=False)
-    if 'user' in request.GET:
+    if 'category_id' in request.POST:
+        if request.POST['category_id'] == 'no_choice':
+            return render(request, 'projects.html', {'categories': categories})
         project = Category.objects.get(pk=request.POST['category_id'])
         if request.user == project.user:
-            if request.POST['category_id'] == 'no_choice':
-                return render(request, 'projects.html', {'categories': categories})
             else:
-                return render(request, 'projects.html', {'categories': categories, 'project': project})
+                category_id = request.POST['category_id']
+                return redirect(reverse('projects_get', args=[category_id]))
         else:
             messages.error(request, 'You may only view your own Projects.')
             return render(request, 'projects.html', {'categories': categories})
