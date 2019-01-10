@@ -194,14 +194,9 @@ def projects(request):
     if 'category_id' in request.POST:
         if request.POST['category_id'] == 'no_choice':
             return render(request, 'projects.html', {'categories': categories})
-        project = Category.objects.get(pk=request.POST['category_id'])
-        if request.user == project.user:
-            else:
-                category_id = request.POST['category_id']
-                return redirect(reverse('projects_get', args=[category_id]))
         else:
-            messages.error(request, 'You may only view your own Projects.')
-            return render(request, 'projects.html', {'categories': categories})
+            category_id = request.POST['category_id']
+            return redirect(reverse('projects_get', args=[category_id]))
     else:
         return render(request, 'projects.html', {'categories': categories})
 
