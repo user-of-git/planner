@@ -28,6 +28,9 @@
                     {% if object_type != "Tasks" %}
                     <option value="Tasks">Tasks</option>
                     {% endif %}
+                    {% if object_type != "Unfinished Tasks" %}
+                    <option value="Unfinished Tasks">Unfinished Tasks</option>
+                    {% endif %}
                     {% if object_type != "Questions" %}
                     <option value="Questions">Questions</option>
                     {% endif %}
@@ -48,7 +51,11 @@
     {% for object in object_list %}
         <li>
             {% if object_type == 'Categories & Projects' %}
-                {{ object }}
+                {% if object.project == True %}
+                    <a href="{% url 'projects_get' object.id %}">{{ object }}</a>
+                {% else %}
+                    {{ object }}
+                {% endif %}
                 <a href="{% url 'edit_category' %}"> +</a>
                 <form class="inline" method="POST" action="{% url 'delete' %}">
                     {% csrf_token %}
@@ -58,6 +65,16 @@
                 </form>
             {% elif object_type == 'Tasks' %}
                 {{ object }}
+                [<a href="{% url 'edit_task' object.id %}">+</a>
+                <form class="inline" method="POST" action="{% url 'delete' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ object.id }}">
+                    <input type="hidden" name="object_type" value="task">
+                    <button class="delete" type="submit" aria-label="Submit">X</button>
+                </form>
+                <a href="{% url 'archive_get' object.start.year object.start.month object.start.day %}">#</a>]
+            {% elif object_type == 'Unfinished Tasks' %}
+                <a href="{% url 'task_finished' object.id %}">{{ object }}</a>
                 [<a href="{% url 'edit_task' object.id %}">+</a>
                 <form class="inline" method="POST" action="{% url 'delete' %}">
                     {% csrf_token %}

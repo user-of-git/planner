@@ -165,6 +165,8 @@ def library(request):
             object_list = Category.objects.filter(user=request.user)
         elif object_type == 'Tasks':
             object_list = Task.objects.filter(user=request.user).order_by('category')
+        elif object_type == "Unfinished Tasks":
+            object_list = Task.objects.filter(user=request.user).exclude(finished=True).order_by('category')
         elif object_type == 'Mottos':
             object_list = Motto.objects.filter(user=request.user)
         elif object_type == 'Questions':
